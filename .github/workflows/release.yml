@@ -1,0 +1,102 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s "$(ls -d /Applications/Xcode*.app | head -1)/Contents/Developer"
+
+      - name: Run tests
+        run: swift test
+
+      - name: Build .app bundle
+        run: ./scripts/build-app.sh release
+
+      - name: Build DMG
+        run: ./scripts/build-dmg.sh ${{ github.event.release.tag_name }}
+
+      - name: Upload DMG to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/Papelim-${{ github.event.release.tag_name }}.dmg
+
+  update-homebrew-tap:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get release info
+        id: release
+        run: |
+          TAG=${{ github.event.release.tag_name }}
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Download DMG and compute SHA256
+        id: sha
+        run: |
+          DMG_URL="https://github.com/marcelotrevisani/papelim/releases/download/${{ github.event.release.tag_name }}/Papelim-${{ github.event.release.tag_name }}.dmg"
+          for i in $(seq 1 30); do
+            if curl -sLI "$DMG_URL" | grep -q "200"; then
+              break
+            fi
+            echo "Waiting for DMG asset... (attempt $i)"
+            sleep 10
+          done
+          curl -sL "$DMG_URL" -o Papelim.dmg
+          SHA=$(sha256sum Papelim.dmg | awk '{print $1}')
+          echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout homebrew-tap
+        uses: actions/checkout@v4
+        with:
+          repository: marcelotrevisani/homebrew-tap
+          token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          path: homebrew-tap
+
+      - name: Update cask formula
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+          TAG: ${{ steps.release.outputs.tag }}
+          SHA256: ${{ steps.sha.outputs.sha256 }}
+        run: |
+          mkdir -p homebrew-tap/Casks
+          cat > homebrew-tap/Casks/papelim.rb << EOF
+          cask "papelim" do
+            version "$VERSION"
+            sha256 "$SHA256"
+
+            url "https://github.com/marcelotrevisani/papelim/releases/download/v#{version}/Papelim-v#{version}.dmg"
+            name "Papelim"
+            desc "Code snippet manager for macOS with syntax highlighting and multi-location sync"
+            homepage "https://github.com/marcelotrevisani/papelim"
+
+            app "Papelim.app"
+
+            postflight do
+              system_command "/usr/bin/xattr", args: ["-cr", "#{appdir}/Papelim.app"]
+            end
+
+            zap trash: [
+              "~/Library/Preferences/com.papelim.app.plist",
+            ]
+          end
+          EOF
+
+      - name: Commit and push formula
+        working-directory: homebrew-tap
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Casks/papelim.rb
+          git commit -m "Update papelim to ${{ steps.release.outputs.version }}"
+          git push
