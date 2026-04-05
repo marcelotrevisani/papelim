@@ -1,10 +1,9 @@
-import XCTest
 @testable import PapelimCore
+import XCTest
 
 /// Old on-disk JSON (written before we added fontSize/useSerifFont/renderMarkdown)
 /// must continue to decode into the current Snippet struct.
 final class SnippetLegacyCompatTests: XCTestCase {
-
     func testLegacySnippetWithoutNewBlockFieldsDecodes() throws {
         let id = UUID().uuidString
         let blockId = UUID().uuidString

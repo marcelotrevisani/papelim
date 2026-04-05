@@ -1,5 +1,5 @@
-import SwiftUI
 import PapelimCore
+import SwiftUI
 
 /// Renders the output of `MarkdownParser.parse` as SwiftUI views.
 /// Inline emphasis (`*x*`, `**x**`, `` `x` ``) is handled via
@@ -21,15 +21,15 @@ struct MarkdownRenderer: View {
     @ViewBuilder
     private func view(for block: MarkdownBlock) -> some View {
         switch block {
-        case .heading(let level, let text):
+        case let .heading(level, text):
             Text(inline(text))
                 .font(.system(size: headingSize(level), weight: .bold))
                 .padding(.top, level == 1 ? 4 : 2)
-        case .paragraph(let text):
+        case let .paragraph(text):
             Text(inline(text))
                 .font(.system(size: baseFontSize))
                 .fixedSize(horizontal: false, vertical: true)
-        case .unorderedList(let items):
+        case let .unorderedList(items):
             VStack(alignment: .leading, spacing: 4) {
                 ForEach(Array(items.enumerated()), id: \.offset) { _, item in
                     HStack(alignment: .top, spacing: 8) {
@@ -38,7 +38,7 @@ struct MarkdownRenderer: View {
                     }
                 }
             }
-        case .orderedList(let items):
+        case let .orderedList(items):
             VStack(alignment: .leading, spacing: 4) {
                 ForEach(Array(items.enumerated()), id: \.offset) { idx, item in
                     HStack(alignment: .top, spacing: 8) {
@@ -47,14 +47,14 @@ struct MarkdownRenderer: View {
                     }
                 }
             }
-        case .blockquote(let text):
+        case let .blockquote(text):
             HStack(spacing: 8) {
                 Rectangle().fill(Color.secondary.opacity(0.4)).frame(width: 3)
                 Text(inline(text))
                     .font(.system(size: baseFontSize).italic())
                     .foregroundStyle(.secondary)
             }
-        case .codeBlock(_, let code):
+        case let .codeBlock(_, code):
             Text(code)
                 .font(.system(size: baseFontSize - 1, design: .monospaced))
                 .textSelection(.enabled)

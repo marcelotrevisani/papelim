@@ -1,5 +1,5 @@
-import XCTest
 @testable import PapelimCore
+import XCTest
 
 final class GroupAutocompleteTests: XCTestCase {
     let candidates = ["work", "personal", "ansible", "ci", "scripts", "Work-archive"]

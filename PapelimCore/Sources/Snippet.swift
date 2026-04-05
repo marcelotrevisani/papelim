@@ -46,13 +46,13 @@ public struct SnippetBlock: Identifiable, Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try c.decode(UUID.self, forKey: .id)
-        self.title = try c.decodeIfPresent(String.self, forKey: .title) ?? ""
-        self.language = try c.decodeIfPresent(String.self, forKey: .language) ?? "plaintext"
-        self.content = try c.decodeIfPresent(String.self, forKey: .content) ?? ""
-        self.fontSize = try c.decodeIfPresent(Double.self, forKey: .fontSize)
-        self.fontFamily = try c.decodeIfPresent(String.self, forKey: .fontFamily)
-        self.renderMarkdown = try c.decodeIfPresent(Bool.self, forKey: .renderMarkdown) ?? false
+        id = try c.decode(UUID.self, forKey: .id)
+        title = try c.decodeIfPresent(String.self, forKey: .title) ?? ""
+        language = try c.decodeIfPresent(String.self, forKey: .language) ?? "plaintext"
+        content = try c.decodeIfPresent(String.self, forKey: .content) ?? ""
+        fontSize = try c.decodeIfPresent(Double.self, forKey: .fontSize)
+        fontFamily = try c.decodeIfPresent(String.self, forKey: .fontFamily)
+        renderMarkdown = try c.decodeIfPresent(Bool.self, forKey: .renderMarkdown) ?? false
     }
 }
 

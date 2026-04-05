@@ -1,5 +1,5 @@
-import XCTest
 @testable import PapelimCore
+import XCTest
 
 final class StorageLocationTests: XCTestCase {
     func testCodableRoundTrip() throws {
@@ -35,7 +35,8 @@ final class StorageLocationTests: XCTestCase {
             .appendingPathComponent("fake-home-\(UUID().uuidString)")
         try FileManager.default.createDirectory(
             at: tmp.appendingPathComponent("Documents"),
-            withIntermediateDirectories: true)
+            withIntermediateDirectories: true
+        )
         defer { try? FileManager.default.removeItem(at: tmp) }
         let detected = SuggestedLocations.detect(home: tmp)
         XCTAssertTrue(detected.contains { $0.name == "Local" })

@@ -1,5 +1,5 @@
-import SwiftUI
 import AppKit
+import SwiftUI
 
 /// Picker over all system font families. Empty string represents "default
 /// monospace". The list is cached at first access (AppKit call is not cheap).

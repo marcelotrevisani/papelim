@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import PapelimCore
+import SwiftUI
 
 /// Sidebar selection: library root, a group, or a language filter.
 enum SidebarSelection: Hashable {
@@ -32,9 +32,9 @@ final class SnippetStore: ObservableObject {
 
     init() {
         let loaded = Self.loadLocationsFromPrefs(key: prefsKey) ?? SuggestedLocations.detect()
-        self.locations = loaded
-        self.repo = SnippetRepository(locations: loaded)
-        self.saveLocations()
+        locations = loaded
+        repo = SnippetRepository(locations: loaded)
+        saveLocations()
     }
 
     // MARK: - Location persistence
@@ -75,7 +75,7 @@ final class SnippetStore: ObservableObject {
     func loadAll() async {
         do {
             let loaded = try repo.loadAll()
-            self.snippets = loaded
+            snippets = loaded
             if selectedId == nil { selectedId = loaded.first?.id }
             let n = repo.activeLocations.count
             lastSyncMessage = "Loaded \(loaded.count) snippet\(loaded.count == 1 ? "" : "s") from \(n) location\(n == 1 ? "" : "s")"
@@ -128,8 +128,8 @@ final class SnippetStore: ObservableObject {
         var groupFilter: String? = nil
         switch sidebarSelection ?? .all {
         case .all: break
-        case .group(let g): groupFilter = g
-        case .language(let l): languageFilter = l
+        case let .group(g): groupFilter = g
+        case let .language(l): languageFilter = l
         }
         return SnippetFiltering.filter(
             snippets,
@@ -142,8 +142,8 @@ final class SnippetStore: ObservableObject {
     var listTitle: String {
         switch sidebarSelection ?? .all {
         case .all: return "All Snippets"
-        case .group(let g): return g
-        case .language(let l): return Language.forId(l).display
+        case let .group(g): return g
+        case let .language(l): return Language.forId(l).display
         }
     }
 

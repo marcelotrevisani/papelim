@@ -17,11 +17,11 @@ public final class SnippetRepository {
         let e = JSONEncoder()
         e.outputFormatting = [.prettyPrinted, .sortedKeys]
         e.dateEncodingStrategy = .iso8601
-        self.encoder = e
+        encoder = e
 
         let d = JSONDecoder()
         d.dateDecodingStrategy = .iso8601
-        self.decoder = d
+        decoder = d
     }
 
     public func setLocations(_ locations: [StorageLocation]) {
@@ -53,7 +53,8 @@ public final class SnippetRepository {
             try? fileManager.createDirectory(at: loc.url, withIntermediateDirectories: true)
             guard fileManager.fileExists(atPath: loc.rawPath) else { continue }
             let entries = (try? fileManager.contentsOfDirectory(
-                at: loc.url, includingPropertiesForKeys: nil)) ?? []
+                at: loc.url, includingPropertiesForKeys: nil
+            )) ?? []
             for file in entries where file.pathExtension == "json" {
                 guard let data = try? Data(contentsOf: file),
                       let snip = try? decoder.decode(Snippet.self, from: data)

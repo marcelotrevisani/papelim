@@ -1,6 +1,6 @@
-import SwiftUI
 import AppKit
 import PapelimCore
+import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var store: SnippetStore

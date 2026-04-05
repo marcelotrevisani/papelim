@@ -1,5 +1,5 @@
-import XCTest
 @testable import PapelimCore
+import XCTest
 
 final class SnippetCodableTests: XCTestCase {
     func testRoundTrip() throws {

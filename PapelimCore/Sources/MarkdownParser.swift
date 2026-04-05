@@ -15,7 +15,6 @@ public enum MarkdownBlock: Equatable {
 }
 
 public enum MarkdownParser {
-
     public static func parse(_ source: String) -> [MarkdownBlock] {
         let lines = source.components(separatedBy: "\n")
         var blocks: [MarkdownBlock] = []
@@ -135,8 +134,10 @@ public enum MarkdownParser {
     private static func parseHeading(_ line: String) -> MarkdownBlock? {
         guard line.hasPrefix("#") else { return nil }
         var level = 0
-        for ch in line { if ch == "#" { level += 1 } else { break } }
-        guard (1...6).contains(level) else { return nil }
+        for ch in line {
+            if ch == "#" { level += 1 } else { break }
+        }
+        guard (1 ... 6).contains(level) else { return nil }
         let rest = String(line.dropFirst(level)).trimmingCharacters(in: .whitespaces)
         guard !rest.isEmpty else { return nil }
         return .heading(level: level, text: rest)
@@ -167,7 +168,9 @@ public enum MarkdownParser {
         if ordered {
             // drop digits then "." or ")" then space
             var idx = s.startIndex
-            while idx < s.endIndex, s[idx].isNumber { idx = s.index(after: idx) }
+            while idx < s.endIndex, s[idx].isNumber {
+                idx = s.index(after: idx)
+            }
             if idx < s.endIndex, s[idx] == "." || s[idx] == ")" { idx = s.index(after: idx) }
             while idx < s.endIndex, s[idx] == " " { idx = s.index(after: idx) }
             return String(s[idx...])

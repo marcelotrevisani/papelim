@@ -1,5 +1,5 @@
-import SwiftUI
 import AppKit
+import SwiftUI
 
 /// Plain (non-highlighted) text editor with configurable font. Used for
 /// `plaintext` and (edit-mode) `markdown` block types.
@@ -33,7 +33,7 @@ struct PlainTextEditor: NSViewRepresentable {
         return scroll
     }
 
-    func updateNSView(_ nsView: NSScrollView, context: Context) {
+    func updateNSView(_: NSScrollView, context: Context) {
         context.coordinator.parent = self
         guard let tv = context.coordinator.textView else { return }
         let desired = Self.font(size: fontSize, family: fontFamily)
@@ -52,7 +52,9 @@ struct PlainTextEditor: NSViewRepresentable {
         let sz = CGFloat(size)
         if let family,
            let font = NSFontManager.shared.font(
-                withFamily: family, traits: [], weight: 5, size: sz) {
+               withFamily: family, traits: [], weight: 5, size: sz
+           )
+        {
             return font
         }
         return NSFont.monospacedSystemFont(ofSize: sz, weight: .regular)
@@ -63,7 +65,7 @@ struct PlainTextEditor: NSViewRepresentable {
         weak var textView: NSTextView?
         var applying = false
         init(_ parent: PlainTextEditor) { self.parent = parent }
-        func textDidChange(_ notification: Notification) {
+        func textDidChange(_: Notification) {
             guard !applying, let tv = textView else { return }
             parent.text = tv.string
         }

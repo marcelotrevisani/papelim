@@ -1,5 +1,5 @@
-import SwiftUI
 import PapelimCore
+import SwiftUI
 
 /// TextField with a popover-backed autocomplete list. Shows existing group
 /// names that match the typed prefix/substring; clicking a suggestion fills

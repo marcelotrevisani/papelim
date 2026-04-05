@@ -1,7 +1,7 @@
-import SwiftUI
 import AppKit
 import Highlightr
 import PapelimCore
+import SwiftUI
 
 /// NSTextView-backed SwiftUI editor. Uses Highlightr's `CodeAttributedString`
 /// (an `NSTextStorage` subclass) so that highlighting happens automatically as
@@ -66,7 +66,7 @@ struct CodeEditor: NSViewRepresentable {
         return scroll
     }
 
-    func updateNSView(_ nsView: NSScrollView, context: Context) {
+    func updateNSView(_: NSScrollView, context: Context) {
         context.coordinator.parent = self
         guard let tv = context.coordinator.textView,
               let storage = context.coordinator.textStorage else { return }
@@ -101,7 +101,7 @@ struct CodeEditor: NSViewRepresentable {
 
         init(_ parent: CodeEditor) { self.parent = parent }
 
-        func textDidChange(_ notification: Notification) {
+        func textDidChange(_: Notification) {
             guard !applying, let tv = textView else { return }
             // Propagate plain text back up; highlighting is handled by
             // CodeAttributedString automatically.

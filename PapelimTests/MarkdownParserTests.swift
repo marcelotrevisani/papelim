@@ -1,8 +1,7 @@
-import XCTest
 @testable import PapelimCore
+import XCTest
 
 final class MarkdownParserTests: XCTestCase {
-
     func testEmptyInputProducesNoBlocks() {
         XCTAssertTrue(MarkdownParser.parse("").isEmpty)
     }

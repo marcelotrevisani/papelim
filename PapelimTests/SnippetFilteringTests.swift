@@ -1,5 +1,5 @@
-import XCTest
 @testable import PapelimCore
+import XCTest
 
 final class SnippetFilteringTests: XCTestCase {
     let snippets: [Snippet] = [

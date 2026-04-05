@@ -1,5 +1,5 @@
-import SwiftUI
 import PapelimCore
+import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var store: SnippetStore
@@ -167,13 +167,14 @@ struct SnippetEditorView: View {
                         .foregroundStyle(.secondary)
                     TextField("tags, comma, separated",
                               text: Binding(
-                                get: { snippet.tags.joined(separator: ", ") },
-                                set: { snippet.tags = $0
-                                    .split(separator: ",")
-                                    .map { $0.trimmingCharacters(in: .whitespaces) }
-                                    .filter { !$0.isEmpty } }
+                                  get: { snippet.tags.joined(separator: ", ") },
+                                  set: { snippet.tags = $0
+                                      .split(separator: ",")
+                                      .map { $0.trimmingCharacters(in: .whitespaces) }
+                                      .filter { !$0.isEmpty }
+                                  }
                               ))
-                        .textFieldStyle(.roundedBorder)
+                              .textFieldStyle(.roundedBorder)
                 }
                 .font(.caption)
             }
@@ -284,7 +285,7 @@ struct BlockView: View {
                             get: { block.effectiveFontSize },
                             set: { block.fontSize = $0 }
                         ),
-                        in: 10...28,
+                        in: 10 ... 28,
                         step: 1
                     ) {
                         Text("\(Int(block.effectiveFontSize))pt").monospacedDigit()

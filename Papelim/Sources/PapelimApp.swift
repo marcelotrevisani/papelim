@@ -1,16 +1,17 @@
-import SwiftUI
 import AppKit
 import PapelimCore
+import SwiftUI
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    func applicationDidFinishLaunching(_ notification: Notification) {
+    func applicationDidFinishLaunching(_: Notification) {
         // When launched via `swift run` (no .app bundle) macOS does not treat
         // the process as a regular GUI app, so the window never becomes key
         // and key events go to the terminal instead of the text view.
         NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
     }
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_: NSApplication) -> Bool { true }
 }
 
 @main

@@ -12,7 +12,7 @@ final class SyntaxHighlighter {
     private init() {
         let h = Highlightr()!
         h.setTheme(to: "atom-one-dark")
-        self.hl = h
+        hl = h
     }
 
     func highlight(_ code: String, languageId: String) -> NSAttributedString {

@@ -1,8 +1,7 @@
-import XCTest
 @testable import PapelimCore
+import XCTest
 
 final class SnippetBlockTests: XCTestCase {
-
     func testDefaultsAreNil() {
         let b = SnippetBlock()
         XCTAssertNil(b.fontSize)

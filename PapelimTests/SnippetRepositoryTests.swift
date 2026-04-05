@@ -1,5 +1,5 @@
-import XCTest
 @testable import PapelimCore
+import XCTest
 
 final class SnippetRepositoryTests: XCTestCase {
     var tempRoot: URL!
@@ -127,6 +127,7 @@ final class SnippetRepositoryTests: XCTestCase {
     }
 
     // MARK: - helpers
+
     private func write(_ snip: Snippet, to loc: StorageLocation) throws {
         let enc = JSONEncoder()
         enc.dateEncodingStrategy = .iso8601

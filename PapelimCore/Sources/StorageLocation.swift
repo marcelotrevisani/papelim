@@ -36,7 +36,7 @@ public enum SuggestedLocations {
         let candidates: [(String, URL)] = [
             ("iCloud Drive", home.appendingPathComponent("Library/Mobile Documents/com~apple~CloudDocs/Papelim")),
             ("Google Drive", home.appendingPathComponent("Google Drive/Papelim")),
-            ("Local",        home.appendingPathComponent("Documents/Papelim")),
+            ("Local", home.appendingPathComponent("Documents/Papelim")),
         ]
 
         // Scan ~/Library/CloudStorage for Google Drive mounts
