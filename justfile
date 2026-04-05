@@ -27,6 +27,10 @@ app config="release":
 dmg version="dev":
     ./scripts/build-dmg.sh {{ version }}
 
+# Generate .icns icon from SVG (requires librsvg)
+icon:
+    ./scripts/create-icns.sh
+
 # Clean build artifacts
 clean:
     rm -rf .build build
