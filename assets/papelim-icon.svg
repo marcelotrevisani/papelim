@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFDF7"/>
+      <stop offset="100%" stop-color="#FEF3C7"/>
+    </linearGradient>
+    <linearGradient id="fold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E5E0D0"/>
+      <stop offset="100%" stop-color="#D1C9B4"/>
+    </linearGradient>
+    <filter id="papershadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#78350F" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Rounded square background -->
+  <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="url(#bg)"/>
+
+  <!-- Subtle inner highlight -->
+  <rect x="20" y="20" width="472" height="236" rx="92" ry="92" fill="white" opacity="0.12"/>
+
+  <!-- Stacked papers behind (drawn first = behind in z-order) -->
+  <rect x="138" y="96" width="264" height="344" rx="8" ry="8"
+        fill="#FDF8EC" stroke="#C4A96A" stroke-width="1" stroke-opacity="0.2"/>
+  <rect x="130" y="90" width="264" height="344" rx="8" ry="8"
+        fill="#FEF6E3" stroke="#C4A96A" stroke-width="1" stroke-opacity="0.12"/>
+
+  <!-- Main paper sheet with dog-ear fold -->
+  <g filter="url(#papershadow)">
+    <path d="
+      M 120 80
+      L 340 80
+      L 392 132
+      L 392 432
+      L 120 432
+      Z
+    " fill="url(#paper)" stroke="#D1C9B4" stroke-width="1.5"/>
+    <path d="
+      M 340 80
+      L 392 132
+      L 340 132
+      Z
+    " fill="url(#fold)" stroke="#C4B99A" stroke-width="1"/>
+  </g>
+
+  <!-- Code lines on paper — syntax-highlighted snippet -->
+  <!-- Line 1: keyword + identifier -->
+  <rect x="148" y="160" width="48" height="10" rx="3" fill="#9333EA" opacity="0.85"/>
+  <rect x="204" y="160" width="80" height="10" rx="3" fill="#475569" opacity="0.5"/>
+
+  <!-- Line 2: indented — function call with string -->
+  <rect x="164" y="184" width="36" height="10" rx="3" fill="#059669" opacity="0.85"/>
+  <rect x="208" y="184" width="56" height="10" rx="3" fill="#475569" opacity="0.5"/>
+  <rect x="272" y="184" width="72" height="10" rx="3" fill="#DC2626" opacity="0.65"/>
+
+  <!-- Line 3: indented — longer expression -->
+  <rect x="164" y="208" width="28" height="10" rx="3" fill="#059669" opacity="0.85"/>
+  <rect x="200" y="208" width="144" height="10" rx="3" fill="#475569" opacity="0.4"/>
+
+  <!-- Line 5: keyword + call -->
+  <rect x="148" y="244" width="56" height="10" rx="3" fill="#2563EB" opacity="0.85"/>
+  <rect x="212" y="244" width="96" height="10" rx="3" fill="#475569" opacity="0.5"/>
+
+  <!-- Line 6: indented -->
+  <rect x="164" y="268" width="40" height="10" rx="3" fill="#9333EA" opacity="0.75"/>
+  <rect x="212" y="268" width="120" height="10" rx="3" fill="#475569" opacity="0.4"/>
+
+  <!-- Line 7: indented short -->
+  <rect x="164" y="292" width="60" height="10" rx="3" fill="#059669" opacity="0.7"/>
+  <rect x="232" y="292" width="40" height="10" rx="3" fill="#475569" opacity="0.4"/>
+
+  <!-- Line 8: closing bracket -->
+  <rect x="148" y="316" width="32" height="10" rx="3" fill="#2563EB" opacity="0.8"/>
+
+  <!-- Code badge (</>) bottom-right corner -->
+  <g transform="translate(352, 368)">
+    <circle cx="40" cy="40" r="40" fill="#1E293B" opacity="0.9"/>
+    <text x="40" y="52" text-anchor="middle"
+          font-family="SF Mono, Menlo, Consolas, monospace"
+          font-size="36" font-weight="bold" fill="#F59E0B">&lt;/&gt;</text>
+  </g>
+</svg>
