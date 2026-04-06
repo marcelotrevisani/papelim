@@ -1,18 +1,18 @@
 @testable import PapelimCore
 import XCTest
 
-/// The crash occurred because `CodeEditor.Coordinator` held a `weak` reference
-/// to the `CodeAttributedString` (the NSTextStorage subclass). After
-/// `makeNSView` returned, nothing else retained it — so it was deallocated.
-/// Changing the language then accessed a dangling pointer.
-///
-/// These tests exercise the same code paths at the model/core layer:
-///   - switching a block's language between plain-text and code languages
-///   - switching between two different code languages
-///   - verifying the snippet round-trips correctly after the switch
-///
-/// The actual AppKit retention fix is in the view layer (not testable here),
-/// but we ensure the model transitions that trigger the view swap are sound.
+// The crash occurred because `CodeEditor.Coordinator` held a `weak` reference
+// to the `CodeAttributedString` (the NSTextStorage subclass). After
+// `makeNSView` returned, nothing else retained it — so it was deallocated.
+// Changing the language then accessed a dangling pointer.
+//
+// These tests exercise the same code paths at the model/core layer:
+//   - switching a block's language between plain-text and code languages
+//   - switching between two different code languages
+//   - verifying the snippet round-trips correctly after the switch
+//
+// The actual AppKit retention fix is in the view layer (not testable here),
+// but we ensure the model transitions that trigger the view swap are sound.
 
 final class LanguageSwitchTests: XCTestCase {
     // MARK: - Model transitions that trigger the view swap

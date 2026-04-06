@@ -21,7 +21,9 @@ public struct StorageLocation: Identifiable, Codable, Hashable, Sendable {
         self.enabled = enabled
     }
 
-    public var url: URL { URL(fileURLWithPath: rawPath, isDirectory: true) }
+    public var url: URL {
+        URL(fileURLWithPath: rawPath, isDirectory: true)
+    }
 }
 
 public enum SuggestedLocations {
