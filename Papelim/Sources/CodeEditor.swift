@@ -95,7 +95,10 @@ struct CodeEditor: NSViewRepresentable {
     final class Coordinator: NSObject, NSTextViewDelegate {
         var parent: CodeEditor
         weak var textView: NSTextView?
-        weak var textStorage: CodeAttributedString?
+        // Strong reference — the text storage is the root of the AppKit text
+        // system chain (storage → layoutManager → textContainer → textView).
+        // Nothing else in the hierarchy retains it, so we must keep it alive.
+        var textStorage: CodeAttributedString?
         var lastLanguage: String = ""
         var applying = false
 
