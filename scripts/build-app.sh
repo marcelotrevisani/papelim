@@ -32,12 +32,14 @@ if [ -f "Papelim/Resources/AppIcon.icns" ]; then
     cp "Papelim/Resources/AppIcon.icns" "$RESOURCES_DIR/AppIcon.icns"
 fi
 
-# Copy all SPM resource bundles into Contents/Resources/.
-# Bundle.module (the SPM-generated accessor) looks for resource bundles via
-# Bundle.main.resourceURL which resolves to Contents/Resources/ inside a .app.
+# Copy all SPM resource bundles.
+# SPM's generated Bundle.module accessor looks at:
+#   Bundle.main.bundleURL / <name>.bundle
+# For a .app, Bundle.main.bundleURL is the .app directory itself, so bundles
+# must live at the TOP level of the .app (next to Contents/).
 for bundle in .build/"$CONFIG"/*.bundle; do
     [ -d "$bundle" ] || continue
-    cp -R "$bundle" "$RESOURCES_DIR/"
+    cp -R "$bundle" "$APP_DIR/"
     echo "  Bundled: $(basename "$bundle")"
 done
 
