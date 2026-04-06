@@ -8,7 +8,9 @@ struct PlainTextEditor: NSViewRepresentable {
     var fontSize: Double
     var fontFamily: String?
 
-    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
 
     func makeNSView(context: Context) -> NSScrollView {
         let scroll = NSTextView.scrollableTextView()
@@ -64,7 +66,10 @@ struct PlainTextEditor: NSViewRepresentable {
         var parent: PlainTextEditor
         weak var textView: NSTextView?
         var applying = false
-        init(_ parent: PlainTextEditor) { self.parent = parent }
+        init(_ parent: PlainTextEditor) {
+            self.parent = parent
+        }
+
         func textDidChange(_: Notification) {
             guard !applying, let tv = textView else { return }
             parent.text = tv.string

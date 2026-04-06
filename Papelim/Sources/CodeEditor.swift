@@ -10,7 +10,9 @@ struct CodeEditor: NSViewRepresentable {
     @Binding var text: String
     var languageId: String
 
-    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
 
     func makeNSView(context: Context) -> NSScrollView {
         let textStorage = CodeAttributedString()
@@ -102,7 +104,9 @@ struct CodeEditor: NSViewRepresentable {
         var lastLanguage: String = ""
         var applying = false
 
-        init(_ parent: CodeEditor) { self.parent = parent }
+        init(_ parent: CodeEditor) {
+            self.parent = parent
+        }
 
         func textDidChange(_: Notification) {
             guard !applying, let tv = textView else { return }

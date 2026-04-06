@@ -172,7 +172,9 @@ public enum MarkdownParser {
                 idx = s.index(after: idx)
             }
             if idx < s.endIndex, s[idx] == "." || s[idx] == ")" { idx = s.index(after: idx) }
-            while idx < s.endIndex, s[idx] == " " { idx = s.index(after: idx) }
+            while idx < s.endIndex, s[idx] == " " {
+                idx = s.index(after: idx)
+            }
             return String(s[idx...])
         } else {
             return String(s.dropFirst(2))

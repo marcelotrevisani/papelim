@@ -29,21 +29,25 @@ final class SnippetRepositoryTests: XCTestCase {
         let failures = try repo.save(snip)
         XCTAssertTrue(failures.isEmpty)
         XCTAssertTrue(FileManager.default.fileExists(
-            atPath: loc1.url.appendingPathComponent(snip.fileName).path))
+            atPath: loc1.url.appendingPathComponent(snip.fileName).path
+        ))
         XCTAssertTrue(FileManager.default.fileExists(
-            atPath: loc2.url.appendingPathComponent(snip.fileName).path))
+            atPath: loc2.url.appendingPathComponent(snip.fileName).path
+        ))
     }
 
     func testSaveSkipsDisabledLocations() throws {
-        var disabled = loc2!
+        var disabled = try XCTUnwrap(loc2)
         disabled.enabled = false
         repo.setLocations([loc1, disabled])
         let snip = Snippet(title: "skip")
         try repo.save(snip)
         XCTAssertTrue(FileManager.default.fileExists(
-            atPath: loc1.url.appendingPathComponent(snip.fileName).path))
+            atPath: loc1.url.appendingPathComponent(snip.fileName).path
+        ))
         XCTAssertFalse(FileManager.default.fileExists(
-            atPath: loc2.url.appendingPathComponent(snip.fileName).path))
+            atPath: loc2.url.appendingPathComponent(snip.fileName).path
+        ))
     }
 
     func testLoadAllMergesAcrossLocations() throws {
@@ -73,7 +77,8 @@ final class SnippetRepositoryTests: XCTestCase {
     func testLoadAllIgnoresNonJsonFiles() throws {
         try "garbage".write(
             to: loc1.url.appendingPathComponent("readme.txt"),
-            atomically: true, encoding: .utf8)
+            atomically: true, encoding: .utf8
+        )
         let snip = Snippet(title: "real")
         try write(snip, to: loc1)
         let loaded = try repo.loadAll()
@@ -84,7 +89,8 @@ final class SnippetRepositoryTests: XCTestCase {
     func testLoadAllIgnoresMalformedJson() throws {
         try "{ not valid json".write(
             to: loc1.url.appendingPathComponent("\(UUID().uuidString).json"),
-            atomically: true, encoding: .utf8)
+            atomically: true, encoding: .utf8
+        )
         let loaded = try repo.loadAll()
         XCTAssertEqual(loaded.count, 0)
     }
@@ -94,12 +100,14 @@ final class SnippetRepositoryTests: XCTestCase {
         try repo.save(snip)
         _ = repo.delete(snip)
         XCTAssertFalse(FileManager.default.fileExists(
-            atPath: loc1.url.appendingPathComponent(snip.fileName).path))
+            atPath: loc1.url.appendingPathComponent(snip.fileName).path
+        ))
         XCTAssertFalse(FileManager.default.fileExists(
-            atPath: loc2.url.appendingPathComponent(snip.fileName).path))
+            atPath: loc2.url.appendingPathComponent(snip.fileName).path
+        ))
     }
 
-    func testDeleteIsIdempotent() throws {
+    func testDeleteIsIdempotent() {
         let snip = Snippet(title: "missing")
         let failures = repo.delete(snip)
         XCTAssertTrue(failures.isEmpty)

@@ -34,12 +34,20 @@ public struct SnippetBlock: Identifiable, Codable, Hashable, Sendable {
         self.renderMarkdown = renderMarkdown
     }
 
-    public var effectiveFontSize: Double { fontSize ?? 13 }
-    public var wantsMarkdownPreview: Bool { renderMarkdown && language == "markdown" }
-    public var wantsPlainTextEditor: Bool { language == "plaintext" || language == "markdown" }
+    public var effectiveFontSize: Double {
+        fontSize ?? 13
+    }
 
-    // Custom decoder: `renderMarkdown` is a new non-optional field, so legacy
-    // JSON (pre-existing snippets) won't have the key. Decode it as false.
+    public var wantsMarkdownPreview: Bool {
+        renderMarkdown && language == "markdown"
+    }
+
+    public var wantsPlainTextEditor: Bool {
+        language == "plaintext" || language == "markdown"
+    }
+
+    /// Custom decoder: `renderMarkdown` is a new non-optional field, so legacy
+    /// JSON (pre-existing snippets) won't have the key. Decode it as false.
     private enum CodingKeys: String, CodingKey {
         case id, title, language, content, fontSize, fontFamily, renderMarkdown
     }
@@ -83,10 +91,14 @@ public struct Snippet: Identifiable, Codable, Hashable, Sendable {
         self.updatedAt = updatedAt
     }
 
-    public var fileName: String { "\(id.uuidString).json" }
+    public var fileName: String {
+        "\(id.uuidString).json"
+    }
 
     /// The first block's language — used for rollup display/filtering.
-    public var primaryLanguage: String { blocks.first?.language ?? "plaintext" }
+    public var primaryLanguage: String {
+        blocks.first?.language ?? "plaintext"
+    }
 
     /// Does any block in this snippet use the given language id?
     public func usesLanguage(_ languageId: String) -> Bool {

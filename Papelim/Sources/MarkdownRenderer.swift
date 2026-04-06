@@ -8,7 +8,9 @@ struct MarkdownRenderer: View {
     let source: String
     let baseFontSize: Double
 
-    private var blocks: [MarkdownBlock] { MarkdownParser.parse(source) }
+    private var blocks: [MarkdownBlock] {
+        MarkdownParser.parse(source)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
