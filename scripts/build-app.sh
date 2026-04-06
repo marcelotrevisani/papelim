@@ -32,12 +32,13 @@ if [ -f "Papelim/Resources/AppIcon.icns" ]; then
     cp "Papelim/Resources/AppIcon.icns" "$RESOURCES_DIR/AppIcon.icns"
 fi
 
-# Copy Highlightr bundled resources (themes/grammars) alongside the binary,
-# since SPM resource bundles live next to the executable in .build/ but must
-# be included in the .app for syntax highlighting to work at runtime.
-BUNDLE_NAME="Highlightr_Highlightr.bundle"
-if [ -d ".build/$CONFIG/$BUNDLE_NAME" ]; then
-    cp -R ".build/$CONFIG/$BUNDLE_NAME" "$MACOS_DIR/$BUNDLE_NAME"
-fi
+# Copy all SPM resource bundles into Contents/Resources/.
+# Bundle.module (the SPM-generated accessor) looks for resource bundles via
+# Bundle.main.resourceURL which resolves to Contents/Resources/ inside a .app.
+for bundle in .build/"$CONFIG"/*.bundle; do
+    [ -d "$bundle" ] || continue
+    cp -R "$bundle" "$RESOURCES_DIR/"
+    echo "  Bundled: $(basename "$bundle")"
+done
 
 echo "Built: $APP_DIR"
