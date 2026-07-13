@@ -89,7 +89,9 @@ public enum MarkdownParser {
                     if isUnorderedListMarker(l) {
                         items.append(stripListMarker(l, ordered: false))
                         i += 1
-                    } else { break }
+                    } else {
+                        break
+                    }
                 }
                 blocks.append(.unorderedList(items))
                 continue
@@ -103,7 +105,9 @@ public enum MarkdownParser {
                     if isOrderedListMarker(l) {
                         items.append(stripListMarker(l, ordered: true))
                         i += 1
-                    } else { break }
+                    } else {
+                        break
+                    }
                 }
                 blocks.append(.orderedList(items))
                 continue
@@ -114,12 +118,24 @@ public enum MarkdownParser {
             i += 1
             while i < lines.count {
                 let l = lines[i].trimmingCharacters(in: .whitespaces)
-                if l.isEmpty { break }
-                if l.hasPrefix("#") { break }
-                if l.hasPrefix(">") { break }
-                if l.hasPrefix("```") { break }
-                if isUnorderedListMarker(l) || isOrderedListMarker(l) { break }
-                if l == "---" || l == "***" || l == "___" { break }
+                if l.isEmpty {
+                    break
+                }
+                if l.hasPrefix("#") {
+                    break
+                }
+                if l.hasPrefix(">") {
+                    break
+                }
+                if l.hasPrefix("```") {
+                    break
+                }
+                if isUnorderedListMarker(l) || isOrderedListMarker(l) {
+                    break
+                }
+                if l == "---" || l == "***" || l == "___" {
+                    break
+                }
                 para.append(l)
                 i += 1
             }
@@ -135,7 +151,11 @@ public enum MarkdownParser {
         guard line.hasPrefix("#") else { return nil }
         var level = 0
         for ch in line {
-            if ch == "#" { level += 1 } else { break }
+            if ch == "#" {
+                level += 1
+            } else {
+                break
+            }
         }
         guard (1 ... 6).contains(level) else { return nil }
         let rest = String(line.dropFirst(level)).trimmingCharacters(in: .whitespaces)
@@ -154,7 +174,11 @@ public enum MarkdownParser {
         // e.g. "1. item" or "12) item"
         var digits = 0
         for ch in s {
-            if ch.isNumber { digits += 1 } else { break }
+            if ch.isNumber {
+                digits += 1
+            } else {
+                break
+            }
         }
         guard digits > 0, s.count > digits + 1 else { return false }
         let idx = s.index(s.startIndex, offsetBy: digits)
@@ -171,7 +195,9 @@ public enum MarkdownParser {
             while idx < s.endIndex, s[idx].isNumber {
                 idx = s.index(after: idx)
             }
-            if idx < s.endIndex, s[idx] == "." || s[idx] == ")" { idx = s.index(after: idx) }
+            if idx < s.endIndex, s[idx] == "." || s[idx] == ")" {
+                idx = s.index(after: idx)
+            }
             while idx < s.endIndex, s[idx] == " " {
                 idx = s.index(after: idx)
             }

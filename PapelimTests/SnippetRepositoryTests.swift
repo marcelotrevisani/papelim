@@ -20,7 +20,9 @@ final class SnippetRepositoryTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        if let tempRoot { try? FileManager.default.removeItem(at: tempRoot) }
+        if let tempRoot {
+            try? FileManager.default.removeItem(at: tempRoot)
+        }
     }
 
     func testSaveFansOutToAllEnabledLocations() throws {
