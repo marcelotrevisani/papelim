@@ -39,7 +39,9 @@ struct PlainTextEditor: NSViewRepresentable {
         context.coordinator.parent = self
         guard let tv = context.coordinator.textView else { return }
         let desired = Self.font(size: fontSize, family: fontFamily)
-        if tv.font != desired { tv.font = desired }
+        if tv.font != desired {
+            tv.font = desired
+        }
         if tv.string != text {
             context.coordinator.applying = true
             let sel = tv.selectedRange()

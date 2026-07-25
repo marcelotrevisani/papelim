@@ -60,7 +60,9 @@ public final class SnippetRepository {
                       let snip = try? decoder.decode(Snippet.self, from: data)
                 else { continue }
                 if let existing = merged[snip.id] {
-                    if snip.updatedAt > existing.updatedAt { merged[snip.id] = snip }
+                    if snip.updatedAt > existing.updatedAt {
+                        merged[snip.id] = snip
+                    }
                 } else {
                     merged[snip.id] = snip
                 }

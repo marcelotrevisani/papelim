@@ -17,12 +17,22 @@ public enum SnippetFiltering {
             }()
             let searchMatch: Bool = {
                 guard !searchText.isEmpty else { return true }
-                if snip.title.localizedCaseInsensitiveContains(searchText) { return true }
-                if snip.tags.contains(where: { $0.localizedCaseInsensitiveContains(searchText) }) { return true }
-                if let group = snip.group, group.localizedCaseInsensitiveContains(searchText) { return true }
+                if snip.title.localizedCaseInsensitiveContains(searchText) {
+                    return true
+                }
+                if snip.tags.contains(where: { $0.localizedCaseInsensitiveContains(searchText) }) {
+                    return true
+                }
+                if let group = snip.group, group.localizedCaseInsensitiveContains(searchText) {
+                    return true
+                }
                 for block in snip.blocks {
-                    if block.title.localizedCaseInsensitiveContains(searchText) { return true }
-                    if block.content.localizedCaseInsensitiveContains(searchText) { return true }
+                    if block.title.localizedCaseInsensitiveContains(searchText) {
+                        return true
+                    }
+                    if block.content.localizedCaseInsensitiveContains(searchText) {
+                        return true
+                    }
                 }
                 return false
             }()

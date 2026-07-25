@@ -71,10 +71,18 @@ struct SettingsView: View {
 
     private func guessName(for url: URL) -> String {
         let p = url.path
-        if p.contains("com~apple~CloudDocs") { return "iCloud Drive" }
-        if p.contains("GoogleDrive") || p.contains("Google Drive") { return "Google Drive" }
-        if p.contains("Dropbox") { return "Dropbox" }
-        if p.contains("OneDrive") { return "OneDrive" }
+        if p.contains("com~apple~CloudDocs") {
+            return "iCloud Drive"
+        }
+        if p.contains("GoogleDrive") || p.contains("Google Drive") {
+            return "Google Drive"
+        }
+        if p.contains("Dropbox") {
+            return "Dropbox"
+        }
+        if p.contains("OneDrive") {
+            return "OneDrive"
+        }
         return url.lastPathComponent
     }
 }

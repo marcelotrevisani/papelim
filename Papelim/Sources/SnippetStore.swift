@@ -76,7 +76,9 @@ final class SnippetStore: ObservableObject {
         do {
             let loaded = try repo.loadAll()
             snippets = loaded
-            if selectedId == nil { selectedId = loaded.first?.id }
+            if selectedId == nil {
+                selectedId = loaded.first?.id
+            }
             let n = repo.activeLocations.count
             lastSyncMessage = "Loaded \(loaded.count) snippet\(loaded.count == 1 ? "" : "s") from \(n) location\(n == 1 ? "" : "s")"
         } catch {
@@ -104,7 +106,9 @@ final class SnippetStore: ObservableObject {
 
     func delete(_ snippet: Snippet) {
         snippets.removeAll { $0.id == snippet.id }
-        if selectedId == snippet.id { selectedId = snippets.first?.id }
+        if selectedId == snippet.id {
+            selectedId = snippets.first?.id
+        }
         _ = repo.delete(snippet)
     }
 

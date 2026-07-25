@@ -20,14 +20,20 @@ struct GroupField: View {
             .focused($focused)
             .onAppear { draft = value ?? "" }
             .onChange(of: value) { new in
-                if !focused { draft = new ?? "" }
+                if !focused {
+                    draft = new ?? ""
+                }
             }
             .onChange(of: draft) { new in
                 value = new.isEmpty ? nil : new
             }
             .popover(isPresented: Binding(
                 get: { focused && !matches.isEmpty },
-                set: { if !$0 { focused = false } }
+                set: {
+                    if !$0 {
+                        focused = false
+                    }
+                }
             ), arrowEdge: .bottom) {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(matches, id: \.self) { match in
